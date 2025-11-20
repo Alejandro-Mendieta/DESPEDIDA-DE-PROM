@@ -1,4 +1,4 @@
-<img width="901" height="636" alt="image" src="https://github.com/Alejandro-Mendieta/DESPEDIDA-DE-PROM/blob/main/assets/FOTO/FOTO_README.jpg?raw=true" />
+<img width="901" height="636" alt="image" src="https://github.com/Alejandro-Mendieta/DESPEDIDA-DE-PROM/blob/main/assets/FOTO/FOTO_README.png?raw=true" />
 
 # 🎓 Carta de Despedida - Promoción 2025
 
