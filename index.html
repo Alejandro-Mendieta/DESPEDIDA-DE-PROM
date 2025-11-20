@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DESPEDIDA PROM 2025</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0A4000 0%, #2E8B57 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+      padding: 20px;
+    }
+
+    .container {
+      text-align: center;
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .title {
+      color: white;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .title h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .title p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .envelope {
+      width: 500px;
+      height: 500px;
+      position: relative;
+      cursor: pointer;
+      margin: 0 auto;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    .envelope:hover {
+      transform: translateY(-5px);
+    }
+
+    .envelope-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+    }
+
+    .envelope.open .envelope-inner {
+      transform: rotateY(180deg);
+    }
+
+    .envelope-front,
+    .envelope-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .envelope-front {
+      background: linear-gradient(135deg, #ffffff, #c8e6c9);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      z-index: 2;
+      border: 2px solid #2E7D32;
+    }
+
+    .envelope-back {
+      background: white;
+      transform: rotateY(180deg);
+      overflow: hidden;
+      z-index: 1;
+      border: 2px solid #2E7D32;
+    }
+
+    .postage-stamp {
+      align-self: flex-end;
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      border: 1px dashed #2E7D32;
+    }
+
+    .postage-stamp svg {
+      width: 40px;
+      height: 40px;
+      color: #2E7D32;
+    }
+
+    .address {
+      color: #2E7D32;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .address p {
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+    }
+
+    .top-fold {
+      width: 100%;
+      height: 30px;
+      background: #2E7D32;
+      position: absolute;
+      top: 0;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .letter {
+      padding: 25px 20px 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    /* CONTENEDOR DE 5 IMÁGENES - MODIFICADO */
+    .horizontal-images-5 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    /* Contenedor especial para la quinta imagen */
+    .image-container {
+      display: contents; /* Permite que los hijos directos participen en el grid */
+    }
+
+    /* La quinta imagen ocupa ambas columnas y mantiene el mismo tamaño */
+    .centered-image {
+      grid-column: 1 / -1; /* Ocupa todas las columnas */
+      display: flex;
+      justify-content: center;
+    }
+
+    .horizontal-image-5 {
+      width: 100%;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid #2E7D32;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .horizontal-image-5:hover {
+      transform: scale(1.05);
+    }
+
+    /* Para la imagen centrada, mantenemos el mismo tamaño pero ocupa todo el ancho */
+    .centered-image .horizontal-image-5 {
+      width: 100%; /* Ocupa todo el ancho disponible */
+      height: 100px; /* Misma altura que las demás */
+    }
+
+    .letter p {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .letter strong {
+      color: #2E7D32;
+      font-size: 1.1rem;
+    }
+
+    .letter-button {
+      background: linear-gradient(135deg, #2E7D32, #4CAF50);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s;
+      z-index: 10;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(46, 125, 50, 0.445);
+      font-weight: bold;
+    }
+
+    .letter-button:hover {
+      background: linear-gradient(135deg, #1B5E20, #4CAF50);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(46, 125, 50, 0.445);
+    }
+
+    /* ESTILOS DEL VIDEO CORREGIDOS */
+    .appearing-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      max-width: 90vw;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      border: 5px solid white;
+      z-index: 100;
+      opacity: 0;
+      transition: all 0.8s ease;
+      object-fit: contain;
+      background-color: #000;
+    }
+
+    .appearing-video.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 90;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .instructions {
+      color: white;
+      margin-top: 20px;
+      font-size: 16px;
+      opacity: 0.9;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232E7D32"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+      background-size: contain;
+      opacity: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #2E7D32;
+      opacity: 0;
+      z-index: 1000;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 101;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    /* MEDIA QUERIES PARA MÓVIL - CORREGIDAS */
+    @media (max-width: 600px) {
+      body {
+        overflow: auto;
+        min-height: auto;
+        padding: 10px;
+        height: auto;
+        display: block;
+      }
+      
+      .container {
+        padding-bottom: 30px;
+      }
+      
+      .envelope {
+        width: 350px;
+        height: 350px;
+        margin-bottom: 20px;
+      }
+      
+      .title h1 {
+        font-size: 1.8rem;
+      }
+      
+      .appearing-video {
+        max-width: 95vw;
+        max-height: 70vh;
+      }
+      
+      .letter {
+        padding: 20px 15px 15px;
+        overflow-y: auto;
+      }
+      
+      .horizontal-images-5 {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      
+      .horizontal-image-5 {
+        height: 90px;
+      }
+      
+      /* En móvil, todas las imágenes ocupan todo el ancho */
+      .centered-image .horizontal-image-5 {
+        width: 100%;
+        height: 90px;
+      }
+      
+      .letter-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      
+      .letter-button {
+        width: 100%;
+        margin-left: 0 !important;
+      }
+      
+      .instructions {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+    }
+
+    /* Estilo adicional para pantallas muy pequeñas */
+    @media (max-width: 380px) {
+      .envelope {
+        width: 300px;
+        height: 300px;
+      }
+      
+      .horizontal-image-5 {
+        height: 80px;
+      }
+      
+      .centered-image .horizontal-image-5 {
+        height: 80px;
+      }
+      
+      .address p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="title">
+      <h1>CARTA DE DESPEDIDA</h1>
+    </div>
+
+    <div class="envelope">
+      <div class="envelope-inner">
+        <!-- Frente de la carta -->
+        <div class="envelope-front">
+          <div class="postage-stamp">
+            <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </div>
+          
+          <div class="address">
+            <p>
+              <strong style="font-size: 35px; color: #2E7D32;">PARA:</strong> 
+              <span style="font-size: 30px; color: #0A4000;">MI CURSO 11.02</span>
+            </p>
+            <p>
+              <strong style="font-size: 35px; color: #2E7D32;">DE:</strong> 
+              <span style="font-size: 30px; color: #0A4000;">ALEJANDRO MENDIETA</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Reverso con la carta -->
+        <div class="envelope-back">
+          <div class="top-fold"></div>
+          <div class="letter">
+            <p>
+              <strong style="font-size: 20px; color: #2E7D32;">PARA: MI CURSO 11.02 </strong><br>
+              <span style="font-size: 18px; color: black; font-weight: bold;">
+                ¡LOS QUIERO MUCHO!
+              </span>
+            </p>
+            
+            <!-- CONTENEDOR DE 5 IMÁGENES MODIFICADO -->
+            <div class="horizontal-images-5">
+              <div class="image-container">
+                <!-- IMAGEN 1 -->
+                <a href="index1.html" target="_blank">
+                  <img src="assets/FOTO/foto1.png" alt="Nuestra Historia" class="horizontal-image-5" onerror="this.style.display='none'">
+                </a>
+                
+                <!-- IMAGEN 2 -->
+                <a href="index2.html" target="_blank">
+                  <img src="assets/FOTO/foto2.png" alt="Mensajes Especiales" class="horizontal-image-5" onerror="this.style.display='none'">
+                </a>
+                
+                <!-- IMAGEN 3 -->
+                <a href="index3.html" target="_blank">
+                  <img src="assets/FOTO/foto3.png" alt="Línea del Tiempo" class="horizontal-image-5" onerror="this.style.display='none'">
+                </a>
+                
+                <!-- IMAGEN 4 -->
+                <a href="index4.html" target="_blank">
+                  <img src="assets/FOTO/foto4.png" alt="Agradecimientos" class="horizontal-image-5" onerror="this.style.display='none'">
+                </a>
+                
+                <!-- IMAGEN 5 - CENTRADA Y DEL MISMO TAMAÑO -->
+                <div class="centered-image">
+                  <a href="index5.html" target="_blank">
+                    <img src="assets/FOTO/foto5.png" alt="Hasta Siempre" class="horizontal-image-5" onerror="this.style.display='none'">
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <p style="font-style: italic; margin-top: 10px; color: #000000; font-size: 16px;">
+              "HOY SE CIERRA UN CAPÍTULO DE NUESTRAS VIDAS, PERO LAS PÁGINAS QUE ESCRIBIMOS JUNTOS QUEDARÁN PARA SIEMPRE EN NUESTRA MEMORIA"
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="letter-buttons">
+      <!-- Botón para reproducir video sorpresa -->
+      <button id="showVideo" class="letter-button">
+        PRESIONA AQUÍ 
+      </button>
+      
+      <!-- Botón para música - CORREGIDO -->
+      <button id="toggleMusic" class="letter-button">
+        🎵 MÚSICA
+      </button>
+    </div>
+
+    <div class="instructions">
+      💡 Haz click en cualquier parte de la página para activar la música
+    </div>
+  </div>
+
+  <!-- Video que aparece al abrir la carta -->
+  <div class="video-container">
+    <button class="close-btn" id="closeVideo">×</button>
+    <!-- RUTA CORREGIDA -->
+    <video class="appearing-video" id="appearingVideo" controls onerror="console.log('Error cargando video')">
+      <source src="assets/FOTO/videoo.mp4" type="video/mp4">
+      Tu navegador no soporta el elemento de video.
+    </video>
+  </div>
+  
+  <!-- Overlay para cuando aparece el video -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- Área para corazones flotantes -->
+  <div class="hearts" id="hearts"></div>
+
+  <!-- Audio - RUTA CORREGIDA -->
+  <audio id="bg-music" loop onerror="console.log('Error cargando audio')">
+    <source src="assets/MUSICA/cancion1.wav" type="audio/wav">
+    <source src="assets/MUSICA/cancion1.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <script>
+    const envelope = document.querySelector(".envelope");
+    const music = document.getElementById("bg-music");
+    const appearingVideo = document.getElementById("appearingVideo");
+    const overlay = document.getElementById("overlay");
+    const showVideoBtn = document.getElementById("showVideo");
+    const closeVideoBtn = document.getElementById("closeVideo");
+    const toggleMusicBtn = document.getElementById("toggleMusic");
+    const heartsContainer = document.getElementById("hearts");
+    
+    // Estado de música - INICIALIZADO CORRECTAMENTE
+    let musicPlaying = false;
+    let userInteracted = false;
+    let wasMusicPlaying = false; // Variable para recordar si la música estaba sonando
+
+    // Verificar si los archivos existen
+    function checkFiles() {
+      const filesToCheck = [
+        'assets/FOTO/foto1.png',
+        'assets/FOTO/foto2.png',
+        'assets/FOTO/foto3.png',
+        'assets/FOTO/foto4.png',
+        'assets/FOTO/foto5.png',
+        'assets/FOTO/videoo.mp4',
+        'assets/MUSICA/Como-Los-Quiero.wav',
+        'assets/MUSICA/Como-Los-Quiero.mp3'
+      ];
+
+      filesToCheck.forEach(file => {
+        fetch(file, { method: 'HEAD' })
+          .then(response => {
+            if (!response.ok) {
+              console.warn(`Archivo no encontrado: ${file}`);
+            } else {
+              console.log(`✓ Archivo encontrado: ${file}`);
+            }
+          })
+          .catch(error => {
+            console.warn(`Error verificando: ${file}`, error);
+          });
+      });
+    }
+
+    // Abrir/cerrar carta
+    envelope.addEventListener("click", () => {
+      envelope.classList.toggle("open");
+      createHearts(5);
+    });
+
+    // Mostrar video
+    showVideoBtn.addEventListener("click", () => {
+      // Guardar el estado de la música antes de abrir el video
+      wasMusicPlaying = musicPlaying;
+      
+      // Pausar la música si está sonando
+      if (musicPlaying) {
+        music.pause();
+        musicPlaying = false;
+        toggleMusicBtn.textContent = "🎵 MÚSICA";
+      }
+      
+      // Mostrar el video
+      appearingVideo.classList.add("show");
+      overlay.classList.add("show");
+      
+      // Reproducir el video automáticamente
+      appearingVideo.play().catch(err => {
+        console.log("El navegador bloqueó la reproducción automática del video:", err);
+      });
+      
+      createConfetti(50);
+    });
+
+    // Cerrar video
+    closeVideoBtn.addEventListener("click", closeVideo);
+    overlay.addEventListener("click", closeVideo);
+
+    function closeVideo() {
+      appearingVideo.classList.remove("show");
+      overlay.classList.remove("show");
+      appearingVideo.pause();
+      
+      // Reanudar la música si estaba sonando antes de abrir el video
+      if (wasMusicPlaying) {
+        const playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            musicPlaying = true;
+            toggleMusicBtn.textContent = "🔇 SILENCIAR";
+          }).catch(error => {
+            console.log("Error al reanudar la música:", error);
+          });
+        }
+      }
+    }
+
+    // CONTROL DE MÚSICA - COMPLETAMENTE CORREGIDO
+    toggleMusicBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      
+      if (!userInteracted) {
+        // Primera interacción - intentar reproducir
+        userInteracted = true;
+        const playPromise = music.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            // Éxito al reproducir
+            musicPlaying = true;
+            toggleMusicBtn.textContent = "🔇 SILENCIAR";
+            console.log("Música iniciada correctamente");
+          }).catch(error => {
+            // Error al reproducir
+            console.log("Error al reproducir música:", error);
+            musicPlaying = false;
+            toggleMusicBtn.textContent = "🎵 MÚSICA";
+            alert("Haz click en cualquier parte de la página para activar la música primero");
+          });
+        }
+      } else {
+        // Usuario ya interactuó - toggle normal
+        if (musicPlaying) {
+          music.pause();
+          musicPlaying = false;
+          toggleMusicBtn.textContent = "🎵 MÚSICA";
+          console.log("Música pausada");
+        } else {
+          const playPromise = music.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => {
+              musicPlaying = true;
+              toggleMusicBtn.textContent = "🔇 SILENCIAR";
+              console.log("Música reanudada");
+            }).catch(error => {
+              console.log("Error al reanudar música:", error);
+            });
+          }
+        }
+      }
+    });
+
+    // Permitir reproducción con click en cualquier parte
+    document.addEventListener('click', function() {
+      if (!userInteracted) {
+        userInteracted = true;
+        const playPromise = music.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            musicPlaying = true;
+            toggleMusicBtn.textContent = "🔇 SILENCIAR";
+            console.log("Música activada por click en la página");
+          }).catch(error => {
+            console.log("Audio bloqueado incluso después del click:", error);
+          });
+        }
+      }
+    });
+
+    // Crear corazones flotantes
+    function createHearts(count) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        
+        // Posición aleatoria
+        const left = Math.random() * 100;
+        const size = Math.random() * 20 + 10;
+        
+        heart.style.left = `${left}%`;
+        heart.style.width = `${size}px`;
+        heart.style.height = `${size}px`;
+        heart.style.animation = `float ${Math.random() * 3 + 5}s linear forwards`;
+        
+        heartsContainer.appendChild(heart);
+        
+        // Eliminar el corazón después de la animación
+        setTimeout(() => {
+          heart.remove();
+        }, 8000);
+      }
+    }
+
+    // Crear confeti
+    function createConfetti(count) {
+      const colors = ['#2E7D32', '#4CAF50', '#8BC34A', '#66BB6A', '#388E3C', '#1B5E20'];
+      
+      for (let i = 0; i < count; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        
+        // Posición aleatoria
+        const left = Math.random() * 100;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        confetti.style.left = `${left}%`;
+        confetti.style.backgroundColor = color;
+        confetti.style.opacity = '1';
+        
+        // Animación
+        confetti.style.animation = `float ${Math.random() * 2 + 3}s linear forwards`;
+        
+        document.body.appendChild(confetti);
+        
+        // Eliminar el confeti después de la animación
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    // Crear algunos corazones al cargar la página
+    window.addEventListener('load', () => {
+      createHearts(3);
+      checkFiles(); // Verificar archivos al cargar
+      
+      // Configuración inicial del botón de música
+      toggleMusicBtn.textContent = "🎵 MÚSICA";
+      music.volume = 0.7;
+      
+      console.log("Página cargada - Lista para interactuar");
+    });
+
+    // Manejar errores de audio
+    music.addEventListener('error', function(e) {
+      console.error('Error de audio:', e);
+      console.log('Verifica que el archivo de audio esté en: assets/MUSICA/Como-Los-Quiero.wav ');
+    });
+
+    // Actualizar estado cuando la música termina
+    music.addEventListener('ended', function() {
+      musicPlaying = false;
+      toggleMusicBtn.textContent = "🎵 MÚSICA";
+    });
+  </script>
+</body>
+</html>

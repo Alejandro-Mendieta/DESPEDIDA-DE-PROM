@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Línea del Tiempo - Promo 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A4000 0%, #2E8B57 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.4);
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Línea del tiempo vertical */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #4CAF50, #2E8B57, #0A4000);
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 60px 0;
+            width: 45%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            border-left: 5px solid #4CAF50;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-right: 5px solid #4CAF50;
+        }
+
+        .timeline-year {
+            position: absolute;
+            top: -25px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-year {
+            right: -80px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            left: -80px;
+        }
+
+        .timeline-content h3 {
+            color: #c8e6c9;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-icon {
+            font-size: 2rem;
+        }
+
+        .timeline-content p {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .memory-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #4CAF50;
+            transition: transform 0.3s ease;
+        }
+
+        .memory-img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Punto en la línea */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px #4CAF50;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -12px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -12px;
+        }
+
+        /* Sección final */
+        .future-section {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 50px;
+            border-radius: 20px;
+            margin: 80px auto;
+            max-width: 800px;
+            border: 3px solid #4CAF50;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .future-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #2E8B57, #0A4000);
+        }
+
+        .future-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #c8e6c9;
+        }
+
+        .future-section p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 50px auto;
+            text-decoration: none;
+            text-align: center;
+            width: fit-content;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.6);
+            background: linear-gradient(135deg, #1B5E20, #4CAF50);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: calc(100% - 80px);
+                left: 80px !important;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-year,
+            .timeline-item:nth-child(even) .timeline-year {
+                left: -70px;
+                right: auto;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: -22px;
+            }
+
+            .memory-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .timeline-content {
+                padding: 20px;
+            }
+
+            .timeline-content h3 {
+                font-size: 1.4rem;
+            }
+
+            .future-section {
+                padding: 30px 20px;
+            }
+
+            .future-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📅 Mi Línea del Tiempo</h1>
+            <p>Un viaje a través de los años que forjaron mi carácter y nuestras amistades</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Año 2023 -->
+            <div class="timeline-item">
+                <div class="timeline-year">2023</div>
+                <div class="timeline-content">
+                    <h3><span class="timeline-icon">😄</span> Cuando encontré mi lugar</h3>
+                    <p>El año en que dejé de ser el nuevo y me convertí en parte fundamental del grupo. 
+                    Donde mis malos chistes empezaron a ser tolerados (¡y hasta celebrados algunas veces!).</p>
+                    <div class="memory-gallery">
+                        <img src="assets/FOTO/2023-1.jpg" alt="2023" class="memory-img" onerror="this.style.display='none'">
+                        <img src="assets/FOTO/2023-2.jpg" alt="2023" class="memory-img" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Año 2024 -->
+            <div class="timeline-item">
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content">
+                    <h3><span class="timeline-icon">💪</span> Demostrando mi carácter</h3>
+                    <p>Cuando mi fortaleza mental se puso a prueba y aprendí que ser fuerte no significa 
+                    no sentir, sino saber levantarse. Y lo hice rodeado de los mejores compañeros.</p>
+                    <div class="memory-gallery">
+                        <img src="assets/FOTO/2024-1.jpg" alt="2024" class="memory-img" onerror="this.style.display='none'">
+                        <img src="assets/FOTO/2024-2.jpg" alt="2024" class="memory-img" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Año 2025 -->
+            <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content">
+                    <h3><span class="timeline-icon">🌟</span> El Alejandro completo</h3>
+                    <p>Hoy me voy como esa persona extrovertida, alegre y compañerista que siempre quise ser, 
+                    pero mejorada por todo lo que aprendí de ustedes. Listo para conquistar el mundo, 
+                    pero siempre llevándolos en mi corazón.</p>
+                    <div class="memory-gallery">
+                        <img src="assets/FOTO/2025-1.jpg" alt="2025" class="memory-img" onerror="this.style.display='none'">
+                        <img src="assets/FOTO/2025-2.jpg" alt="2025" class="memory-img" onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="future-section">
+            <h2>🚀 El Viaje Continúa...</h2>
+            <p>
+                "Esta línea del tiempo no termina aquí. Cada experiencia, cada reto superado, 
+                cada momento compartido lo llevare como un gran recuerdo."
+            </p>
+        </div>
+
+        <a href="index.html" class="back-btn">← Volver a la Carta Principal</a>
+    </div>
+
+    <script>
+        // Animación de aparición de elementos de la línea del tiempo
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.3,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+
+            // Efecto parallax suave
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                document.querySelector('.header').style.transform = `translateY(${rate * 0.5}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

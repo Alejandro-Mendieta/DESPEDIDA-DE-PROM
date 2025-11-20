@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legado de Gratitud - Promo 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #0A4000 0%, #2E8B57 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 50px 20px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #c8e6c9, #4CAF50, #2E8B57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Sección de agradecimientos */
+        .gratitude-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #c8e6c9;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #4CAF50, #2E8B57);
+            border-radius: 2px;
+        }
+
+        .gratitude-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .gratitude-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gratitude-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #2E8B57);
+        }
+
+        .gratitude-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: #4CAF50;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gratitude-card h3 {
+            color: #c8e6c9;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .gratitude-card p {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        /* Sección especial de cierre */
+        .closing-section {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 60px 40px;
+            border-radius: 25px;
+            margin: 80px 0;
+            text-align: center;
+            border: 3px solid #4CAF50;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .closing-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(76, 175, 80, 0.1), transparent);
+            z-index: -1;
+        }
+
+        .closing-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #c8e6c9;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .closing-message {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #c8e6c9;
+            margin-top: 40px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Efectos de partículas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: floatParticle 8s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 35px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: block;
+            margin: 60px auto;
+            text-decoration: none;
+            text-align: center;
+            width: fit-content;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(46, 125, 50, 0.7);
+            background: linear-gradient(135deg, #1B5E20, #4CAF50);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.8rem;
+            }
+
+            .gratitude-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .closing-title {
+                font-size: 2.2rem;
+            }
+
+            .closing-message {
+                font-size: 1.1rem;
+            }
+
+            .signature {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .gratitude-card {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .closing-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Partículas de fondo -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🙏 Mi Gratitud Eterna</h1>
+            <p>Palabras desde lo más profundo de mi corazón para quienes hicieron posible este viaje</p>
+        </div>
+
+        <div class="gratitude-section">
+            <h2 class="section-title">A Quienes Marcaron Mi Vida</h2>
+            
+            <div class="gratitude-cards">
+                <div class="gratitude-card">
+                    <div class="card-icon">🤝</div>
+                    <h3>Por dejarme ser parte de sus vidas</h3>
+                    <p>
+                        "Gracias por permitirme estar en sus momentos importantes. Por confiar en mí 
+                        cuando necesitaban un amigo, por aguantar mis chistes malos, y por demostrarme 
+                        que la verdadera amistad no tiene condiciones."
+                    </p>
+                </div>
+
+                <div class="gratitude-card">
+                    <div class="card-icon">🌠</div>
+                    <h3>Mis más sinceros deseos</h3>
+                    <p>
+                        "De todo corazón, les deseo: éxito en todo lo que se propongan, familias unidas 
+                        y saludable, risas que llenen sus hogares, y esa paz interior que tanto merecen. 
+                    </p>
+                </div>
+
+                <div class="gratitude-card">
+                    <div class="card-icon">💫</div>
+                    <h3>Mi promesa como amigo</h3>
+                    <p>
+                        "Aunque nuestros caminos se separen, siempre tendrán en mí a ese amigo alegre, 
+                        compañerista y dispuesto a ayudar. Mi WhatsApp siempre estará abierto para 
+                        celebrar sus éxitos y apoyar en sus desafíos."
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="closing-section">
+            <h2 class="closing-title">Mi Promesa al Futuro</h2>
+            
+            <div class="closing-message">
+                <p>
+                    "Hoy cierro un capítulo, pero llevo conmigo las lecciones más valiosas: 
+                    la importancia de la comunidad, el poder de la educación y la belleza de 
+                    los lazos que se tejen cuando las almas se encuentran."
+                </p>
+                
+                <p style="margin: 25px 0;">
+                    "Prometo honrar cada enseñanza recibida, cada consejo dado, cada lágrima 
+                    enjugada y cada risa compartida. Dondequiera que vaya, seré el reflejo 
+                    de todo lo bueno que aprendí aquí."
+                </p>
+
+                <p>
+                    "A mi 1102: no digo adiós, digo gracias. Gracias por ser parte 
+                    de mi historia, por ayudarme a escribir estas páginas inolvidables. 
+                    Donde quiera que el destino nos lleve, siempre tendrán un amigo en mí."
+                </p>
+            </div>
+
+            <div class="signature">
+                Con eterno agradecimiento,<br>
+                Alejandro
+            </div>
+        </div>
+
+        <a href="index.html" class="back-btn">← Volver al Inicio</a>
+    </div>
+
+    <script>
+        // Crear partículas animadas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posición aleatoria
+                const left = Math.random() * 100;
+                const delay = Math.random() * 8;
+                const duration = 6 + Math.random() * 4;
+                const size = 2 + Math.random() * 3;
+                
+                particle.style.left = `${left}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = 0.3 + Math.random() * 0.4;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Efecto de aparición suave para las tarjetas
+        function animateCards() {
+            const cards = document.querySelectorAll('.gratitude-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = 'all 0.8s ease';
+                observer.observe(card);
+            });
+        }
+
+        // Inicializar efectos cuando cargue la página
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            animateCards();
+        });
+    </script>
+</body>
+</html>
